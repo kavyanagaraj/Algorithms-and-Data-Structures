@@ -1,6 +1,6 @@
 //Coding challenge
 //Input : ["dog", "god", "cat", "act", "money"]
-//Output : {"dog" : 2, "cat": 2, "money": 1}
+//Output : {dog : 2, cat: 2, money: 1}
 
 function isAnagram (str1, dictAna) {    
     for(key in dictAna){
@@ -30,6 +30,6 @@ function anagramCounter(arr){
     return output;
 }
 
-var anagramArray = ["dog", "god", "cat", "act", "money"]
+var anagramArray = ["dog", "god", "tac", "cat", "act", "money"]
 var anaCounter = anagramCounter(anagramArray);
 console.log(anaCounter);
