@@ -3,7 +3,7 @@
 // of lower indices is equal to the sum of elements of higher indices
 
 function equi(arr){
-  if(arr.length == 0){
+  if(!arr || arr.length == 0){
     return -1;
   }
   var leftSum = 0;

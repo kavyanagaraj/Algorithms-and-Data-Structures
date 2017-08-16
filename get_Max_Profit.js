@@ -10,7 +10,7 @@ function get_max_profit (arr) {
     // write the body of your function here
     var min = arr[0];
     var max = arr[0];
-    var minIndex = 0
+    var minIndex = 0;
     var maxIndex = 0;
     var posMin = arr[0]
     var posIndex = 0;
