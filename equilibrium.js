@@ -15,6 +15,7 @@ function equi(arr){
       }
       leftSum += arr[i];
   }
+  return -1;
 }
 
 var eq = equi([-1, 3, -4, 5, 1, -6, 2, 1]);
