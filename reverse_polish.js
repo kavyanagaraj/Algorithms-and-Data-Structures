@@ -26,12 +26,14 @@ function calculate(strOne){
             stack.push(Math.floor(operand1 / operand2));
           }
           break;
+        case '^':
+            stack.push(Math.pow(operand1, operand2));
         default:
           break;
       }
     }
   }
-  return stack[0];
+  return stack.length > 0 ?  stack.pop() : "error";
 }
 
 var postfix = '15 7 1 1 + - ÷ 3 * 2 1 1 + + -'
