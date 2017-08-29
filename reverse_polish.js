@@ -28,6 +28,7 @@ function calculate(strOne){
           break;
         case '^':
             stack.push(Math.pow(operand1, operand2));
+            break;
         default:
           break;
       }
