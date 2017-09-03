@@ -2,22 +2,18 @@
 //Stack plates with max capacity
 
 class setOfStacks{
-  constructor(max){
-    if(!max){
-      this.max = 100
-    }else{
-      this.max = max
-    }
-    this.stack = []
+  constructor(){
+    this.max = 10
+    this.stack = [];
   }
 
   push(val){
     var lastStack = this.stack[this.stack.length-1]
-    if(this.stack.length == 0 || lastStack.stack.length == lastStack.max){
-      this.stack.push(new setOfStacks(10));
-      lastStack = this.stack[this.stack.length-1]
+    if(this.stack.length == 0 || lastStack.length == this.max){
+      this.stack.push([val]);
+    } else{
+      lastStack.push(val);
     }
-    lastStack.stack.push(val);
     return this;
   }
 
@@ -27,19 +23,34 @@ class setOfStacks{
     }
     else{
       var lastStack = this.stack[this.stack.length-1]
-      var temp = lastStack.stack.pop();
-      if(lastStack.stack.length == 0){
+      var temp = lastStack.pop();
+      if(lastStack.length == 0){
         this.stack.pop();
       }
       return temp;
     }
   }
 
+  popAt(ind){
+    var stack = Math.floor(ind / (this.max));
+    var stack_ind = ind % (this.max);
+    if(stack > this.stack.length){
+      return this;
+    }
+    this.stack[stack].splice(stack_ind, 1);
+    // if(this.stack[stack].length == 0){
+    //   this.stack.pop();
+    // }
+    for(var i = stack+1; i < this.stack.length; i++){
+      var temp = this.stack[stack+1].splice(0,1);
+      this.stack[stack].push(temp[0]);
+      stack++;
+    }
+  }
 }
 
-
 var arr = new setOfStacks();
-for(var i =0; i < 21; i ++){
+for(var i =0; i < 41; i ++){
   arr.push(i);
 }
 
@@ -47,6 +58,11 @@ for(var i =0; i < 7; i ++){
   arr.pop();
 }
 
-arr.popAt(1,0)
+arr.popAt(10);
+arr.popAt(22);
+arr.popAt(31);
+arr.popAt(30);
+arr.popAt(30);
+
 
 console.log(arr.stack);
