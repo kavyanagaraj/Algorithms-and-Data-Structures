@@ -17,6 +17,7 @@ function find_median(arr1, arr2){
   }
   var mid, mid1, i=0; j=0;;
     for(var count = 1; count <= median+1; count++){
+      console.log(count);
       if(arr1[i] > arr2[j]){
         if(count == median){
           mid = arr2[j];
@@ -24,6 +25,7 @@ function find_median(arr1, arr2){
         if(count == median+1){
           mid1 = arr2[j];
         }
+        console.log("mid, mid1 j", mid, mid1);
         j++;
       }
       else{
@@ -33,6 +35,7 @@ function find_median(arr1, arr2){
         if(count == median+1){
           mid1 = arr1[i];
         }
+        console.log("mid, mid1 i", mid, mid1);
         i++;
       }
     }
@@ -40,4 +43,4 @@ function find_median(arr1, arr2){
     return isEven ? (mid+mid1)/2 : mid
   }
 
-console.log(find_median([1,2,5,7], [3,4,9,10]));
+console.log(find_median([1,2], [3,4]));
