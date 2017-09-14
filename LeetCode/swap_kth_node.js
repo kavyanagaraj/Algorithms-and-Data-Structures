@@ -81,5 +81,4 @@ for(var i = 0; i <= 7; i++){
   swap_kth(list, i);
 }
 
-// swap_kth(list, 4).display();
 
