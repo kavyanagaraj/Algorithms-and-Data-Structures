@@ -7,12 +7,12 @@
 
 data = {
   "doctors" : [
-    {"name" : "Keith Ahmann", "speciality" : "Pediatrics", "area" : "San Jose", "review_score" : 3},
-    {"name" : "Sima Stein", "speciality" : "Orthopedic", "area" : "Los Gatos", "review_score" : 4.5},
-    {"name" : "Marina Yam", "speciality" : "Pediatrics", "area" : "San Jose", "review_score" : 4},
-    {"name" : "John", "speciality" : "Pediatrics", "area" : "Palo Alto", "review_score" : 3},
-    {"name" : "Marina Tim", "speciality" : "Orthopedic", "area" : "San Jose", "review_score" : 4},
-    {"name": "BURSTEIN", "speciality" : "Pediatrics", "area" : "Calabasas", "review_score" : 3}
+    {"first_name" : "Keith", "last_name" : "Ahmann",  "name" : "Keith Ahmann", "speciality" : "Pediatrics", "area" : "San Jose", "review_score" : 3},
+    {"first_name" : "Sima", "last_name" : "Stein", "name" : "Sima Stein", "speciality" : "Orthopedic", "area" : "Los Gatos", "review_score" : 4.5},
+    {"first_name" : "Marina", "last_name" : "Yam", "name" : "Marina Yam", "speciality" : "Pediatrics", "area" : "San Jose", "review_score" : 4},
+    {"first_name" : "John", "last_name" : "John", "name" : "John", "speciality" : "Pediatrics", "area" : "Palo Alto", "review_score" : 3},
+    {"first_name" : "Marina", "last_name" : "Tim", "name" : "Marina Tim", "speciality" : "Orthopedic", "area" : "San Jose", "review_score" : 4},
+    {"first_name" : "BURSTEIN", "last_name" : "Joseph", "name": "BURSTEIN Joseph", "speciality" : "Pediatrics", "area" : "Calabasas", "review_score" : 4.5}
   ]
 }
 
@@ -30,12 +30,18 @@ data = {
 
 
 function getDoctors(name){
+  if(name == ""){
+    return [];
+  }
   name = name.toLowerCase();
   var doctors = data["doctors"];
-  // Retrieves all the doctors whose name matches with the input name
-  var matched_doctors = doctors.filter( doctor => {    
-    return doctor.name.toString().toLowerCase().includes(name);
+  var name_pattern = new RegExp(name);
+  // Retrieves all the doctors whose first name or last name or full name matches with the input name
+  var matched_doctors = doctors.filter( doctor => {
+    return name_pattern.test(doctor.first_name.toString().toLowerCase()) || name_pattern.test(doctor.last_name.toString().toLowerCase()) || 
+            name_pattern.test(get_full_name(doctor.first_name.toString().toLowerCase(), doctor.last_name.toString().toLowerCase()));
   });
+  console.log(matched_doctors);
   
   var similardocs = [];
   
@@ -57,11 +63,11 @@ function getDoctors(name){
     // If area is the same then it orders the doctors alphabetically
     
     similardocs.forEach(doctors_list => {
-      doctors_list.sort((doc1,doc2) => {
-        if(doctors_list[0] !== doc1){
-          return doc1.review_score == doc2.review_score ? 
-          (doc1.area.toString().toLowerCase() == doc2.area.toString().toLowerCase() ? doc1.name.toString().localeCompare(doc2.name.toString()) : 
-          doc1.area.toString().toLowerCase() != doc2.area.toString().toLowerCase()) : doc1.review_score < doc2.review_score;
+      doctors_list.sort((doctor1,doctor2) => {
+        if(doctors_list[0] !== doctor1){
+          return doctor1.review_score == doctor2.review_score ? 
+          (doctor1.area.toString().toLowerCase() == doctor2.area.toString().toLowerCase() ? doctor1.first_name.toString().localeCompare(doctor2.first_name.toString()) : 
+          doctor1.area.toString().toLowerCase() != doctor2.area.toString().toLowerCase()) : doctor1.review_score < doctor2.review_score;
         }
       });
     });
@@ -69,12 +75,19 @@ function getDoctors(name){
   return similardocs;
 }
 
-var filtered_doctors_list = getDoctors("Mar");
-display(filtered_doctors_list);
+console.log("Test Case 1");
+var filtered_doctors_list = getDoctors("Marina Yam");
+filtered_doctors_list.length > 0 ? display(filtered_doctors_list) : console.log("Please enter a valid name");
+console.log("Test Case 2");
+filtered_doctors_list = getDoctors("");
+filtered_doctors_list.length > 0 ? display(filtered_doctors_list) : console.log("Please enter a valid name");
+
+function get_full_name(first_name, last_name){
+  return first_name + " " + last_name;
+}
 
 
 // Function to display the list with the name matched and similar doctors in order
-
 function display(doctors_list){
   console.log("**********************");
   for(var i = 0; i < doctors_list.length; i++){
