@@ -10,9 +10,6 @@ var myAtoi = function(str) {
     }
     str = str.trim();
     var operator = /[\+-]/.test(str[0]);
-    if(operator && str[1] && !isNumber(str[1])){
-        return 0
-    }
     if( operator || isNumber(str[0])){
        var newstr ="";
         for(var i = 0; i <str.length; i++){
@@ -23,7 +20,7 @@ var myAtoi = function(str) {
             }
         } 
     }
-    number = newstr*1
+    var number = newstr*1
     if(str[0] == "-"){
         number = number * -1
     }
@@ -39,4 +36,4 @@ function isNumber(char){
     return /[0-9]/.test(char)
 }
 
-console.log(myAtoi("1"))
+console.log(myAtoi("+1"))
