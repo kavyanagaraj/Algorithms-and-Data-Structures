@@ -9,28 +9,34 @@ var myAtoi = function(str) {
         return 0
     }
     str = str.trim();
-    // var operator = /[\+-]*/.test(str[0])
-    // if( operator || isNumber(str[0])){
-    //    var newstr ="";
-    //     for(var i = 0; i <str.length; i++){
-    //         if(isNumber(str[i])){
-    //             newstr += str[i];
-    //         }
-    //     } 
-    // }
-    // if(str[0] == "-"){
-    //     newstr = parseInt(newstr) * -1
-    // }
-    // return newstr ? parseInt(newstr) : 0;  
-    var number = parseInt(str)
+    var operator = /[\+-]/.test(str[0]);
+    if(operator && str[1] && !isNumber(str[1])){
+        return 0
+    }
+    if( operator || isNumber(str[0])){
+       var newstr ="";
+        for(var i = 0; i <str.length; i++){
+            if(isNumber(str[i])){
+                newstr += str[i];
+            }else if( i >= 1){
+                break;
+            }
+        } 
+    }
+    number = newstr*1
+    if(str[0] == "-"){
+        number = number * -1
+    }
     if(number > 2147483647){
         return 2147483647
     }else if(number < -2147483648){
         return -2147483648
     }
-    return number ? number : 0
+    return number ? number : 0; 
 };
 
 function isNumber(char){
     return /[0-9]/.test(char)
 }
+
+console.log(myAtoi("1"))
