@@ -26,7 +26,7 @@ data = {
 // If the review score of two or more doctors are same then arrange the list according to the area
 // If the area of the two or more doctors are the same then arrange alphabetically based on doctors name
 
-// Assumptions : Speciality names are consistent 
+// Assumptions : Speciality names are consistent
 // Area or Location is autopopulated to be San Jose or Palo Alto etc..
 // Test cases are included at the bottom
 
@@ -37,7 +37,7 @@ function getDoctors(name){
   }
   //Deletes if extra trailing and leading spaces are added
   name = name.toLowerCase().trim();
-  // Removing multiple spaces and splitting on a space
+  // Removing multiple spaces, splitting and joining with a space
   name = name.replace(/ +(?= )/g,'').split(' ').join(' ');
   var doctors = data["doctors"];
   var name_pattern = new RegExp(name);
@@ -45,37 +45,35 @@ function getDoctors(name){
   var matched_doctors = doctors.filter( doctor => {
     return doctor.first_name.toString().toLowerCase().startsWith(name) || doctor.last_name.toString().toLowerCase().startsWith(name) ||
             name_pattern.test(get_full_name(doctor.first_name.toString().toLowerCase(), doctor.last_name.toString().toLowerCase()));
-    // return name_pattern.test(doctor.first_name.toString().toLowerCase()) || name_pattern.test(doctor.last_name.toString().toLowerCase()) || 
-    //         name_pattern.test(get_full_name(doctor.first_name.toString().toLowerCase(), doctor.last_name.toString().toLowerCase()));
   });
-  
+
   // Retrives a list of doctors matching the speciality for each doctor whose name is matched
   // excluding the matched doctor from the list
   matched_doctors.forEach(person => {
     var matched_similar_doctors = doctors.filter(doctor => {
-          return doctor.speciality.toString().toLowerCase() == person.speciality.toString().toLowerCase() && 
-            doctor.first_name.toString().toLowerCase() !== person.first_name.toLowerCase();
-    });
-    
+        return doctor.speciality.toString().toLowerCase() == person.speciality.toString().toLowerCase() &&
+          doctor.first_name.toString().toLowerCase() !== person.first_name.toLowerCase();
+  });
+
     // Creates a list with the matched doctor and its similar doctors in order
     var newList = [person];
     newList = newList.concat(matched_similar_doctors);
     similar_doctors.push(newList);
-    
-    // Rearrange the similar doctors 
+
+    // Rearrange the similar doctors
     // 1) Orders them according to the review score
     // 2) If review scores are same then it orders according to the area matching the primary matched doctor
     // If area is the same then it orders the doctors alphabetically
-    
+
     similar_doctors.forEach(doctors_list => {
       doctors_list.sort((doctor1,doctor2) => {
         if(doctors_list[0] !== doctor1){
           //Using nested ternary operator it sorts according to review first
-          return doctor1.review_score == doctor2.review_score ? 
+          return doctor1.review_score == doctor2.review_score ?
                     // If review scores are same it checks if area is same
                     (doctor1.area.toString().toLowerCase() == doctor2.area.toString().toLowerCase() ?
                      doctor1.first_name.toString().localeCompare(doctor2.first_name.toString()) :
-                     doctor1.area.toString().toLowerCase() != doctor2.area.toString().toLowerCase()) 
+                     doctor1.area.toString().toLowerCase() != doctor2.area.toString().toLowerCase())
                   : doctor1.review_score < doctor2.review_score;
         }
       });
@@ -124,7 +122,7 @@ function display_each_doctor(doctor){
 // Test Case 1 name is Marina Yam - Given a full name
 var filtered_doctors_list = getDoctors("Marina Yam");
 display(filtered_doctors_list);
-//Test Case 2 name is empty 
+//Test Case 2 name is empty
 filtered_doctors_list = getDoctors("");
 display(filtered_doctors_list);
 // Test Case 3 if there are more doctors with the same name entered - Example : Marina
@@ -136,7 +134,7 @@ display(filtered_doctors_list);
 // Test Case 5 name with apostrophe and lower case name
 var filtered_doctors_list = getDoctors("o'connor");
 display(filtered_doctors_list);
-// Test Case 6 name with numbers 
+// Test Case 6 name with numbers
 var filtered_doctors_list = getDoctors("Jefferson 16th");
 display(filtered_doctors_list);
 // Test Case 7 name with leading and trailing spaces
@@ -144,7 +142,7 @@ var filtered_doctors_list = getDoctors("            Jefferson 16th    ");
 display(filtered_doctors_list);
 // Test Case 8 name with leading and trailing spaces and space in between first name and last
 var filtered_doctors_list = getDoctors("            Jefferson        16th    ");
-display(filtered_doctors_list); 
+display(filtered_doctors_list);
 
 // Unit Tests
 // I have covered many unit tests required in the test cases above
