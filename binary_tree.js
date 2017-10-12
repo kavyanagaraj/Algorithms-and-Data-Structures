@@ -1,4 +1,4 @@
-// Binary Tree Implementation
+// Binary Tree Implementation and traversals
 
 class BinaryTree{
     constructor(){
@@ -63,6 +63,17 @@ BinaryTree.prototype.in_order = function(node){
     return;
 }
 
+BinaryTree.prototype.isBalanced = function(){
+    return Math.abs((this.height(this.root.left)-this.height(this.root.right))) > 1 ? false : true
+}
+
+BinaryTree.prototype.height = function(node){
+    if(!node){
+        return 0;
+    }
+    return Math.max(this.height(node.left), this.height(node.right))+1
+}
+
 let tree = new BinaryTree();
 let arr = [1,2,3,4,5];
 
@@ -70,12 +81,16 @@ for(var i = 0; i < arr.length; i++){
     tree.insert(arr[i]);
 }
 
+console.log("------------------------");
 console.log("Post Order tree traversal");
 tree.post_order(tree.root);
+console.log("------------------------");
 console.log("In Order tree traversal");
 tree.in_order(tree.root);
+console.log("------------------------");
 console.log("Pre Order tree traversal");
 tree.pre_order(tree.root);
-// console.log(tree);
+console.log("------------------------");
+console.log("Is the tree balanced", tree.isBalanced());
 
 
